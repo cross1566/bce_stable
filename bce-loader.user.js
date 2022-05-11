@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name Bondage Club Enhancements Loader
+// @name Bondage Club Enhancements Stable Loader 
 // @namespace https://www.bondageprojects.com/
 // @version 1.0.1
 // @description enhancements for the bondage club
@@ -9,6 +9,7 @@
 // @match https://bondage-europe.com/*
 // @match https://www.bondage-europe.com/*
 // @match http://localhost:*/*
+// @license https://gitlab.com/Sidiousious/bce/-/blob/main/LICENSE
 // @icon data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @grant none
 // @run-at document-end
@@ -35,7 +36,7 @@
 	"use strict";
 
 	const script = document.createElement("script");
-	script.src = `https://sidiousious.gitlab.io/bce/bce.user.js?v=${(
+	script.src = `https://github.com/corss1566/bce_stable/raw/master/bce.user.js?v=${(
 		Date.now() / 10000
 	).toFixed(0)}`;
 	document.head.appendChild(script);

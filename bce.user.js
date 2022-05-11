@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name Bondage Club Enhancements
+// @name Bondage Club Enhancements Stable
 // @namespace https://www.bondageprojects.com/
 // @version 3.2.2
 // @description enhancements for the bondage club
@@ -9,6 +9,7 @@
 // @match https://bondage-europe.com/*
 // @match https://www.bondage-europe.com/*
 // @match http://localhost:*/*
+// @license https://gitlab.com/Sidiousious/bce/-/blob/main/LICENSE
 // @icon data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @grant none
 // @run-at document-end
@@ -1308,7 +1309,7 @@ async function BondageClubEnhancements() {
 		// Version check
 		bceLog("checking for updates...");
 		fetch(
-			`https://sidiousious.gitlab.io/bce/bce.user.js?_=${
+			`https://github.com/corss1566/bce_stable/raw/master/bce.user.js?_=${
 				(Date.now() / 1000 / 3600) | 0
 			}`
 		)
