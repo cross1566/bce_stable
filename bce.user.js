@@ -39,7 +39,7 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-const BCE_VERSION = "3.2.2";
+const BCE_VERSION = "cross";
 const settingsVersion = 35;
 
 const bceChangelog = `${BCE_VERSION}
