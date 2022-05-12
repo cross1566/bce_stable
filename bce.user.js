@@ -105,7 +105,9 @@ async function BondageClubEnhancements() {
 	const BCX_DEVEL_SOURCE =
 			"https://jomshir98.github.io/bondage-club-extended/devel/bcx.js",
 		BCX_SOURCE =
-			"https://raw.githubusercontent.com/Jomshir98/bondage-club-extended/d919ff7dadcdf66f7e324dfc5f611b6dbf566020/bcx.js";
+			"https://raw.githubusercontent.com/Jomshir98/bondage-club-extended/898eeba03b35f7bf4c7a3b073a3ce730508e7eda/bcx.js";
+
+
 
 	const BCE_COLOR_ADJUSTMENTS_CLASS_NAME = "bce-colors",
 		BCE_LICENSE = "https://gitlab.com/Sidiousious/bce/-/blob/main/LICENSE",
