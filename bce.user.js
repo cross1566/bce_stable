@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name Bondage Club Enhancements Stable
 // @namespace https://www.bondageprojects.com/
-// @version 3.2.2
+// @version 3.2.2 stable
 // @description enhancements for the bondage club
-// @author Sidious
+// @author Sidious; cross1566
 // @match https://bondageprojects.elementfx.com/*
 // @match https://www.bondageprojects.elementfx.com/*
 // @match https://bondage-europe.com/*
