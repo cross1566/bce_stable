@@ -3,7 +3,7 @@
 // @namespace https://www.bondageprojects.com/
 // @version 1.0.1 
 // @description enhancements for the bondage club
-// @author Sidious, cross
+// @author Sidious; cross1566
 // @match https://bondageprojects.elementfx.com/*
 // @match https://www.bondageprojects.elementfx.com/*
 // @match https://bondage-europe.com/*
