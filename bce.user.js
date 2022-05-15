@@ -44,6 +44,7 @@ const settingsVersion = 35;
 
 const bceChangelog = `${BCE_VERSION}
 - add digits 0-9 to allowed nickname characters
+- update loaded bcx version to 0.8.3
 
 3.2.1
 - R80Beta1 compatibilty
