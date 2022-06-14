@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name Bondage Club Enhancements
+// @name Bondage Club Enhancements Stable
 // @namespace https://www.bondageprojects.com/
 // @version 3.4.5 stable
 // @description enhancements for the bondage club
