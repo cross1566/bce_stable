@@ -36,7 +36,7 @@
 	"use strict";
 
 	const script = document.createElement("script");
-	script.src = `https://raw.githubusercontent.com/corss1566/bce_stable/master/bce.user.js?v=${(
+	script.src = `https://raw.githubusercontent.com/cross1566/bce_stable/master/bce.user.js?v=${(
 		Date.now() / 10000
 	).toFixed(0)}`;
 	document.head.appendChild(script);
