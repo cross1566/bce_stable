@@ -38,7 +38,7 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-const BCE_VERSION = "350x";
+const BCE_VERSION = "350.x";
 const settingsVersion = 38;
 
 const bceChangelog = `${BCE_VERSION}
