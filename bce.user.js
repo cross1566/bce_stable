@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name Bondage Club Enhancements Stable
+// @name Bondage Club Enhancements X‘s Special Release
 // @namespace https://www.bondageprojects.com/
-// @version 3.6.0 Stable
+// @version 3.6.1 X
 // @description enhancements for the bondage club
 // @author Sidious
 // @custum version by cross1566
@@ -39,20 +39,24 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-const BCE_VERSION = "360x";
+const BCE_VERSION = "361x";
 const settingsVersion = 38;
 
 const bceChangelog = `${BCE_VERSION}
+- add addon items to craftable items
+- add nudity toggle to crafting preview
+
+3.6.0
 - R81 compatibility
 - add /craft command
 - improvements to the crafting interface
-- removed all activities cheat until it can be implemented better // deleted by cross1566
+- removed all activities cheat until it can be implemented better
 
-3.5.0
+3.5
 - R81Beta3 compatibility
 - remove cheat to loosen/tighten *while bound*: it has become apparent this is causing more problems than the issues it was created to solve
 - fix notes in profile
-- validate version strings before displaying them // deleted by cross1566
+- validate version strings before displaying them
 - new setting to allow using all activities always regardless of their prerequisites
 
 3.4
@@ -380,16 +384,14 @@ async function BondageClubEnhancements() {
 			},
 			category: "cheats",
 		},
-
         skipActivityPrerequisites: {
-			label: "Always allow all activities",
-			value: false,
-			sideEffects: (newValue) => {
-				bceLog("skipActivityPrerequisites", newValue);
-			},
-			category: "cheats",
-		},
-
+                label: "Always allow all activities",
+                value: false,
+            sideEffects: (newValue) => {
+                bceLog("skipActivityPrerequisites", newValue);
+            },
+            category: "cheats",
+        },
 		bcx: {
 			label: "Load BCX by Jomshir98 (no auto-update)",
 			value: false,
@@ -937,6 +939,7 @@ async function BondageClubEnhancements() {
 			AppearanceExit: "AA300341",
 			AppearanceLoad: "A14CB302",
 			AppearanceRun: "6DDA14A1",
+			CharacterAppearanceNaked: "E95F92F7",
 			CharacterAppearanceWardrobeLoad: "A5B63A03",
 			CharacterBuildDialog: "3CC4F4AA",
 			CharacterCompressWardrobe: "8D3B1AB1",
@@ -8696,30 +8699,28 @@ async function BondageClubEnhancements() {
 			}
 		);
 	}
-
-	function skipActivitiesPrerequisites() {
-		SDK.hookFunction(
-			"ActivityCheckPrerequisites",
-			HOOK_PRIORITIES.OverrideBehaviour,
-			/** @type {(args: [Activity, Character, Character, AssetGroup], next: (args: [Activity, Character, Character, AssetGroup]) => boolean) => boolean} */
-			(args, next) => {
-				const [activity, acting, acted, group] = args;
-				if (!activity?.Prerequisite) {
-					return true;
-				}
-				if (bceSettings.skipActivityPrerequisites) {
-					// Keep item needs to be checked
-					return activity.Prerequisite.filter((pre) =>
-						pre.startsWith("Needs-")
-					).every((pre) =>
-						ActivityCheckPrerequisite(pre, acting, acted, group)
-					);
-				}
-				return next(args);
-			}
-		);
-	}
-
+    function skipActivitiesPrerequisites() {
+        SDK.hookFunction(
+            "ActivityCheckPrerequisites",
+            HOOK_PRIORITIES.OverrideBehaviour,
+            /** @type {(args: [Activity, Character, Character, AssetGroup], next: (args: [Activity, Character, Character, AssetGroup]) => boolean) => boolean} */
+            (args, next) => {
+                const [activity, acting, acted, group] = args;
+                if (!activity?.Prerequisite) {
+                    return true;
+                }
+                if (bceSettings.skipActivityPrerequisites) {
+                    // Keep item needs to be checked
+                    return activity.Prerequisite.filter((pre) =>
+                        pre.startsWith("Needs-")
+                    ).every((pre) =>
+                        ActivityCheckPrerequisite(pre, acting, acted, group)
+                    );
+                }
+                return next(args);
+            }
+        );
+    }
 	async function crafting() {
 		await waitFor(() => Array.isArray(Commands) && Commands.length > 0);
 
@@ -8729,6 +8730,9 @@ async function BondageClubEnhancements() {
 		/** @type {Character} */
 		let previewChar = null;
 		let viaRoom = false;
+		let nakedPreview = false;
+		/** @type {[number, number, number, number]} */
+		const nudityToggleButtonPosition = [560, 870, 90, 90];
 		Commands.push({
 			Tag: "craft",
 			Description: displayText("open the crafting menu"),
@@ -8769,7 +8773,11 @@ async function BondageClubEnhancements() {
 
 		/** @type {(craft: Craft) => void} */
 		function updatePreview(craft) {
+			previewChar.Appearance = [...Player.Appearance];
 			CharacterReleaseTotal(previewChar);
+			if (nakedPreview) {
+				CharacterNaked(previewChar);
+			}
 			const items = Asset.filter((a) => a.Name === craft.Item && a.Group.Zone);
 			for (const item of items) {
 				InventoryWear(
@@ -8873,13 +8881,24 @@ async function BondageClubEnhancements() {
 			"Partial crafting enhancements - coloring"
 		);
 
+		patchFunction(
+			"CraftingItemListBuild",
+			{
+				'(I.Asset.Group.Name != "ItemAddon")': "true",
+			},
+			"Crafting addon items"
+		);
+
 		SDK.hookFunction(
 			"CraftingClick",
 			HOOK_PRIORITIES.AddBehaviour,
 			(args, next) => {
 				switch (CraftingMode) {
 					case "Name":
-						if (MouseIn(80, 250, 225, 275)) {
+						if (MouseIn(...nudityToggleButtonPosition)) {
+							nakedPreview = !nakedPreview;
+							updatePreview(previewChar.Crafting[CraftingSlot]);
+						} else if (MouseIn(80, 250, 225, 275)) {
 							CraftingModeSet("Item");
 							CraftingOffset = 0;
 							CraftingItemListBuild();
@@ -8935,6 +8954,12 @@ async function BondageClubEnhancements() {
 			}
 		);
 
+		patchFunction(
+			"CharacterAppearanceNaked",
+			{ "C.IsNpc()": "!C.IsOnline()" },
+			"Crash when toggling nudity in crafting preview"
+		);
+
 		SDK.hookFunction(
 			"CraftingRun",
 			HOOK_PRIORITIES.ModifyBehaviourMedium,
@@ -8942,6 +8967,12 @@ async function BondageClubEnhancements() {
 				const ret = next(args);
 				if (CraftingMode === "Name") {
 					DrawCharacter(previewChar, 665, 65, 0.9, false);
+					DrawButton(
+						...nudityToggleButtonPosition,
+						"",
+						"white",
+						`Icons/${nakedPreview ? "Dress" : "Naked"}.png`
+					);
 					if (coloring) {
 						ItemColorDraw(
 							previewChar,
