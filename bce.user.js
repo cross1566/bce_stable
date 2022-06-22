@@ -50,13 +50,13 @@ const bceChangelog = `${BCE_VERSION}
 - R81 compatibility
 - add /craft command
 - improvements to the crafting interface
-- removed all activities cheat until it can be implemented better
+- removed all activities cheat until it can be implemented better   // this change is removed by cross
 
 3.5
 - R81Beta3 compatibility
 - remove cheat to loosen/tighten *while bound*: it has become apparent this is causing more problems than the issues it was created to solve
 - fix notes in profile
-- validate version strings before displaying them
+- validate version strings before displaying them   // this change is removed by cross
 - new setting to allow using all activities always regardless of their prerequisites
 
 3.4
